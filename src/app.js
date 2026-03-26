@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import fruitRoutes from "./routes/fruitRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
 
 const app = express();
 
@@ -15,5 +16,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/fruits", fruitRoutes);
+app.use("/api/categories", categoryRoutes);
 
 export default app;

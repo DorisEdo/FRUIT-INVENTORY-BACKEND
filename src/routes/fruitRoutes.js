@@ -17,4 +17,38 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  try {
+    const {
+      name,
+      description,
+      price,
+      stockQuantity,
+      supplier,
+      expiryDate,
+      imageUrl,
+      categoryId,
+    } = req.body;
+
+    const newFruit = await prisma.fruit.create({
+      data: {
+        name,
+        description,
+        price,
+        stockQuantity,
+        supplier,
+        expiryDate: expiryDate ? new Date(expiryDate) : null,
+        imageUrl,
+        categoryId,
+      },
+      include: { category: true },
+    });
+
+    res.status(201).json(newFruit);
+  } catch (error) {
+    console.error("Error creating fruit:", error);
+    res.status(500).json({ error: "Failed to create fruit" });
+  }
+});
+
 export default router;
