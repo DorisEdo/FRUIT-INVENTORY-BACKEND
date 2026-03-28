@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,8 +22,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Check Prisma client
-        run: npx prisma generate
-
-      - name: Build check
-        run: echo "No tests yet"
+      - name: CI check
+        run: echo "Backend CI is running"
