@@ -1,19 +1,34 @@
-# Fruit Inventory Backend
+# Fruit Inventory & Management Backend
 
-Backend API for the Fruit Inventory Management system.
+A robust REST API for managing fruit inventory in an enterprise setting.
+
+## Features
+
+- User registration and JWT authentication
+- Role-based authorization (USER / ADMIN)
+- Full CRUD operations for Fruits (Inventory Management)
+- Category management
+- Protected routes for admin actions
 
 ## Tech Stack
-- Node.js (Express)
-- Prisma ORM
-- PostgreSQL (Render)
+
+- Node.js + Express.js
+- Prisma ORM with PostgreSQL
+- JWT for authentication
+- Deployed on Render
+
+## Live API
+
+→ https://fruit-inventory-backend.onrender.com
+
+## API Endpoints
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `GET /api/fruits`
+- `POST /api/fruits` (Admin only)
+- etc.
 
 ## Setup
 
-```bash
-npm install
-npm run dev
-
-## Notes
-- Prisma ORM is used for database access and schema management
-- PostgreSQL is hosted on Render (managed cloud database)
-- Environment variables are used for secure configuration
+...
