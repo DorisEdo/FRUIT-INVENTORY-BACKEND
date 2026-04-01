@@ -1,6 +1,25 @@
 import express from "express";
 import prisma from "../prisma.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
+import sgMail from "@sendgrid/mail";
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+const sendLowStockEmail = async (fruit) => {
+  const msg = {
+    to: "doris.edo@ada.ac.uk",
+    from: "doris.edo@ada.ac.uk",
+    subject: `Low stock alert: ${fruit.name}`,
+    text: `${fruit.name} stock is low (${fruit.stockQuantity} left).`,
+  };
+
+  try {
+    await sgMail.send(msg);
+    console.log("Low stock email sent");
+  } catch (error) {
+    console.error("Email error:", error);
+  }
+};
 
 const router = express.Router();
 
@@ -46,6 +65,9 @@ router.post("/", authenticateToken, async (req, res) => {
     });
 
     res.status(201).json(newFruit);
+    if (newFruit.stockQuantity <= 5) {
+      await sendLowStockEmail(newFruit);
+    }
   } catch (error) {
     console.error("Error creating fruit:", error);
     res.status(500).json({ error: "Failed to create fruit" });
@@ -90,6 +112,9 @@ router.put("/:id", authenticateToken, async (req, res) => {
     });
 
     res.json(updatedFruit);
+    if (updatedFruit.stockQuantity <= 5) {
+      await sendLowStockEmail(updatedFruit);
+    }
   } catch (error) {
     console.error("Update error:", error);
     res.status(500).json({ error: "Failed to update fruit" });
